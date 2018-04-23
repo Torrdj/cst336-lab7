@@ -26,7 +26,25 @@ $(".replayBtn").on("click", function()
     location.reload();
 });
 
+$("#word").on("click", ".hint", function()
+{
+    hint($(this));
+});
+
 //FUNCTIONS
+function hint(btn)
+{
+    btn.prop("disabled",true);
+    btn.hide();
+    $("#word").append("<span class='hint'>Hint: " + selectedHint + "</span>");
+
+    remainingGuesses -= 1;
+    updateMan();
+
+    if (remainingGuesses <= 0)
+        endGame(false);
+}
+
 function startGame()
 {
     pickWord();
@@ -65,7 +83,7 @@ function updateBoard()
         $("#word").append(board[i] + " ");
 
     $("#word").append("<br />");
-    $("#word").append("<span class='hint'>Hint: " + selectedHint + "</span>");
+    $("#word").append("<button class='hint btn btn-warning'>Hint</button>");
 }
 
 function updateWord(positions, letter)
